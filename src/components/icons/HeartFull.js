@@ -3,8 +3,8 @@ import Svg, {Path} from 'react-native-svg';
 const SvgHeartFull = props => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
+    width={30}
+    height={27}
     fill="none"
     viewBox="0 0 30 27"
     {...props}>
