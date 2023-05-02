@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "svgr": "svgr ./src/assets/icons -d ./src/components/icons --native --icon"
   },
   "dependencies": {
     "@react-native-community/slider": "^4.4.2",
@@ -34,6 +35,8 @@
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/eslint-config": "^3.2.0",
+    "@svgr/cli": "^7.0.0",
+    "@svgr/core": "^7.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
