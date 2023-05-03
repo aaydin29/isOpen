@@ -1,12 +1,14 @@
-import {StyleSheet, View, TextInput} from 'react-native';
+import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 import {Menu, Search} from '../../icons';
 
-const HomeHeader = () => {
+const HomeHeader = ({onPress}) => {
   return (
     <View style={styles.container}>
-      <Menu style={styles.menu} />
+      <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+        <Menu style={styles.menu} />
+      </TouchableOpacity>
       <TextInput
         placeholder="Search place..."
         style={styles.textInput}
