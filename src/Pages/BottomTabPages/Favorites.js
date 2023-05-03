@@ -1,14 +1,22 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import FavHeader from '../../components/cards/Favorites/FavHeader';
 import colors from '../../styles/colors';
 import FavPlacesCard from '../../components/cards/Favorites/FavPlacesCard';
+import PlacesModal from '../../components/modals/PlacesModal';
 
 const Favorites = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function handlePlaceSelect() {
+    setModalVisible(!modalVisible);
+  }
+
   return (
     <View style={styles.container}>
       <FavHeader />
-      <FavPlacesCard />
+      <FavPlacesCard onPress={handlePlaceSelect} />
+      <PlacesModal isVisible={modalVisible} onClose={handlePlaceSelect} />
     </View>
   );
 };

@@ -67,7 +67,7 @@ const dizi = [
   },
 ];
 
-const PlacesCard = () => {
+const PlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -80,7 +80,7 @@ const PlacesCard = () => {
   function renderPlaces({item}) {
     return (
       <View style={styles.info_container}>
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
           <Image style={styles.image} source={{uri: item.image}} />
           <View style={styles.active_circle} />
           <View style={styles.back_text} />

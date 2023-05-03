@@ -1,16 +1,24 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import colors from '../../styles/colors';
 import NearHeader from '../../components/cards/NearPage/NearHeader';
 import SliderCard from '../../components/cards/NearPage/SliderCard';
 import PlacesCard from '../../components/cards/NearPage/PlacesCard';
+import PlacesModal from '../../components/modals/PlacesModal';
 
 const NearPage = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function handlePlaceSelect() {
+    setModalVisible(!modalVisible);
+  }
+
   return (
     <View style={styles.container}>
       <NearHeader navigation={navigation} />
       <SliderCard />
-      <PlacesCard />
+      <PlacesCard onPress={handlePlaceSelect} />
+      <PlacesModal isVisible={modalVisible} onClose={handlePlaceSelect} />
     </View>
   );
 };

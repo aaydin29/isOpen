@@ -12,7 +12,7 @@ import React, {useState, useCallback} from 'react';
 import colors from '../../../styles/colors';
 import {Star} from '../../icons';
 
-const FavPlacesCard = () => {
+const FavPlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -25,7 +25,7 @@ const FavPlacesCard = () => {
   function renderPlaces({item}) {
     return (
       <View style={styles.render_container}>
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
           <Image style={styles.image} source={{uri: item.image}} />
           <View style={styles.info_container}>
             <View style={styles.nameAndcircle}>
