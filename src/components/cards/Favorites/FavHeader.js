@@ -1,26 +1,17 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
 
-import {Back} from '../../icons';
-
-const NearHeader = ({navigation}) => {
+const FavHeader = () => {
   const [toggleSwitch, setToggleSwitch] = useState(false);
 
   function handleToggle() {
     setToggleSwitch(!toggleSwitch);
   }
 
-  function handleGoBack() {
-    navigation.goBack();
-  }
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleGoBack} style={styles.back_icon}>
-        <Back />
-      </TouchableOpacity>
-      <Text style={styles.header_text}>Near Restaurants</Text>
+      <Text style={styles.header_text}>Favorites</Text>
       <ToggleSwitch
         isOn={toggleSwitch}
         onColor="#00BF63"
@@ -32,7 +23,7 @@ const NearHeader = ({navigation}) => {
   );
 };
 
-export default NearHeader;
+export default FavHeader;
 
 const styles = StyleSheet.create({
   container: {
@@ -40,17 +31,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 55,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderBottomWidth: 0.5,
     borderColor: 'white',
     paddingBottom: 15,
   },
-  back_icon: {},
   header_text: {
     color: 'white',
     fontSize: 20,
-    marginLeft: 30,
-    marginRight: 20,
+    textAlign: 'center',
+    flex: 1,
+    marginLeft: 50,
     paddingBottom: 5,
   },
 });

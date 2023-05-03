@@ -4,13 +4,11 @@ import {
   View,
   Image,
   FlatList,
-  ScrollView,
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
 import React, {useState, useCallback} from 'react';
 import colors from '../../../styles/colors';
-import SliderCard from './SliderCard';
 
 const dizi = [
   {
@@ -45,7 +43,7 @@ const dizi = [
   },
   {
     id: 5,
-    name: 'Cherry Cafe',
+    name: 'Aydin Coffe Shop Market Place',
     image:
       'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
   },
@@ -86,7 +84,12 @@ const PlacesCard = () => {
           <Image style={styles.image} source={{uri: item.image}} />
           <View style={styles.active_circle} />
           <View style={styles.back_text} />
-          <Text style={styles.places_name}>{item.name}</Text>
+          <Text
+            style={styles.places_name}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {item.name}
+          </Text>
         </TouchableOpacity>
       </View>
     );

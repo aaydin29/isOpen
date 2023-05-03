@@ -3,8 +3,8 @@ import Svg, {Path} from 'react-native-svg';
 const SvgStar = props => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
+    width={15}
+    height={14}
     fill="none"
     viewBox="0 0 14 13"
     {...props}>
