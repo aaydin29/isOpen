@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useState} from 'react';
 import FavHeader from '../../components/cards/Favorites/FavHeader';
 import colors from '../../styles/colors';
@@ -14,6 +14,11 @@ const Favorites = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="light-content"
+        translucent
+        backgroundColor="rgba(0, 0, 0, 0)"
+      />
       <FavHeader />
       <FavPlacesCard onPress={handlePlaceSelect} />
       <PlacesModal isVisible={modalVisible} onClose={handlePlaceSelect} />

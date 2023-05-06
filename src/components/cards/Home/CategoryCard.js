@@ -3,62 +3,86 @@ import {
   Text,
   View,
   Image,
-  ScrollView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 
-const dizi = [
+const placesData = [
   {
     id: 0,
-    name: 'Restaurant',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
+    category: 'Restaurant',
+    image: require('../../../assets/CategoryImages/restaurants.jpg'),
   },
   {
     id: 1,
-    name: 'Hotels',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
+    category: 'Cafe',
+    image: require('../../../assets/CategoryImages/cafes.jpg'),
   },
   {
     id: 2,
-    name: 'Museum',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
+    category: 'Hotel',
+    image: require('../../../assets/CategoryImages/hotels.jpg'),
   },
   {
     id: 3,
-    name: 'Shopping Malls',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
+    category: 'Supermarket',
+    image: require('../../../assets/CategoryImages/supermarkets.jpg'),
   },
   {
     id: 4,
-    name: 'Libraries',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
+    category: 'Museum',
+    image: require('../../../assets/CategoryImages/museums.jpg'),
+  },
+  {
+    id: 5,
+    category: 'Park',
+    image: require('../../../assets/CategoryImages/parks.jpg'),
+  },
+  {
+    id: 6,
+    category: 'Cinema',
+    image: require('../../../assets/CategoryImages/cinemas.jpg'),
+  },
+  {
+    id: 7,
+    category: 'Shopping Mall',
+    image: require('../../../assets/CategoryImages/shopping-malls.jpg'),
+  },
+  {
+    id: 8,
+    category: 'Gym',
+    image: require('../../../assets/CategoryImages/gyms.jpg'),
+  },
+  {
+    id: 9,
+    category: 'Bar',
+    image: require('../../../assets/CategoryImages/bars.jpg'),
   },
 ];
-
 const CategoryCard = ({navigation}) => {
   function handleSelectCategory() {
     navigation.navigate('NearPage');
   }
+
+  function renderCategories({item}) {
+    return (
+      <View style={styles.info_container}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleSelectCategory}>
+          <Image style={styles.image} source={item.image} />
+          <Text style={styles.category_name}>{item.category}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
-    <View>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {dizi.map(d => (
-          <View key={d.id} style={styles.info_container}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={handleSelectCategory}>
-              <Image style={styles.image} source={{uri: d.image}} />
-              <Text style={styles.category_name}>{d.name}</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
+    <View style={styles.container}>
+      <FlatList
+        data={placesData}
+        renderItem={renderCategories}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   );
 };
@@ -86,7 +110,7 @@ const styles = StyleSheet.create({
     color: 'white',
     position: 'absolute',
     bottom: 7,
-    left: 25,
+    left: 10,
     fontSize: 20,
   },
 });

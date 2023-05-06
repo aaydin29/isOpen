@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useState} from 'react';
 import colors from '../../styles/colors';
 import NearHeader from '../../components/cards/NearPage/NearHeader';
@@ -15,6 +15,11 @@ const NearPage = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="light-content"
+        translucent
+        backgroundColor="rgba(0, 0, 0, 0)"
+      />
       <NearHeader navigation={navigation} />
       <SliderCard />
       <PlacesCard onPress={handlePlaceSelect} />
