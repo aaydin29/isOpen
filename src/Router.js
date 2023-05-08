@@ -13,6 +13,7 @@ import NearPage from './Pages/StackPages/NearPage';
 import colors from './styles/colors';
 
 import {HomeEmpty, HomeFull, HeartEmpty, HeartFull} from './components/icons';
+import PlaceProvider from './context/Provider';
 
 function BottomTab() {
   return (
@@ -29,12 +30,14 @@ function BottomTab() {
 
 const Router = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="BottomTab" component={BottomTab} />
-        <Stack.Screen name="NearPage" component={NearPage} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PlaceProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="BottomTab" component={BottomTab} />
+          <Stack.Screen name="NearPage" component={NearPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PlaceProvider>
   );
 };
 

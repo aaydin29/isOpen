@@ -10,46 +10,62 @@ import React, {useState, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import Config from 'react-native-config';
 import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {addPlace} from '../../../context/reducers';
 
 const CategoryCard = ({navigation}) => {
   const [userLocation, setUserLocation] = useState(null);
+  const dispatch = useDispatch();
+  const placeList = useSelector(state => state.placeList);
 
   useEffect(() => {
-    // Kullanıcının konumunu al
     Geolocation.getCurrentPosition(
       position => {
         const {latitude, longitude} = position.coords;
         setUserLocation({latitude, longitude});
       },
       error => {
-        console.log('An error occured!:', error);
+        console.log('An error occurred:', error);
       },
     );
   }, []);
 
-  function handleSelectCategory(item) {
-    const {latitude, longitude} = userLocation;
-    const radius = 10000; // 10 km
-
-    axios
-      .get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
-        params: {
-          location: `${latitude},${longitude}`,
-          radius: radius,
-          type: item.apiType,
-          key: Config.API_KEY,
-        },
-      })
-      .then(response => {
-        const places = response.data.results;
-        navigation.navigate('NearPage', {
-          category: item.category,
-          places: places,
-        });
-      })
-      .catch(error => {
-        console.log('An error occurred:', error);
+  function HandleSelectCategory(item) {
+    const categoryData = placeList?.[item.category];
+    if (categoryData) {
+      // Redux store'da veri varsa, veriyi kullanın
+      navigation.navigate('NearPage', {
+        category: item.category,
+        places: categoryData,
       });
+    } else {
+      // const {latitude, longitude} = userLocation();
+      const lat = 40.9802;
+      const long = 29.0269;
+      const radius = 10000; // 10 km
+
+      axios
+        .get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+          params: {
+            location: `${lat},${long}`,
+            radius: radius,
+            type: item.apiType,
+            key: Config.API_KEY,
+          },
+        })
+        .then(response => {
+          const places = response.data.results;
+          dispatch(addPlace({category: item.category, place: places}));
+
+          navigation.navigate('NearPage', {
+            category: item.category,
+            places: places,
+          });
+        })
+        .catch(error => {
+          console.log('An error occurred:', error);
+        });
+    }
   }
 
   function renderCategories({item}) {
@@ -57,7 +73,7 @@ const CategoryCard = ({navigation}) => {
       <View style={styles.info_container}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => handleSelectCategory(item)}>
+          onPress={() => HandleSelectCategory(item)}>
           <Image style={styles.image} source={item.image} />
           <Text style={styles.category_name}>{item.category}</Text>
         </TouchableOpacity>

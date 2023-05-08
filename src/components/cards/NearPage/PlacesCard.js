@@ -27,6 +27,17 @@ const PlacesCard = ({onPress, places}) => {
     if (item.photos && item.photos.length > 0) {
       photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${item.photos[0].photo_reference}&key=${Config.API_KEY}`;
     }
+
+    let activeCircleColor = colors.starOrange;
+
+    if (item.opening_hours) {
+      if (item.opening_hours.open_now === true) {
+        activeCircleColor = colors.openGreen;
+      } else if (item.opening_hours.open_now === false) {
+        activeCircleColor = colors.closeRed;
+      }
+    }
+
     return (
       <View style={styles.info_container}>
         <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
@@ -38,8 +49,9 @@ const PlacesCard = ({onPress, places}) => {
               source={require('../../../assets/CategoryImages/defaultPlaces.png')}
             />
           )}
-
-          <View style={styles.active_circle} />
+          <View
+            style={[styles.active_circle, {backgroundColor: activeCircleColor}]}
+          />
           <View style={styles.back_text} />
           <Text
             style={styles.places_name}
