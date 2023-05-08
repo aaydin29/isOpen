@@ -11,6 +11,7 @@
     "svgr": "svgr ./src/assets/icons -d ./src/components/icons --native --icon"
   },
   "dependencies": {
+    "@react-native-community/geolocation": "^3.0.6",
     "@react-native-community/slider": "^4.4.2",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -21,6 +22,7 @@
     "react": "18.2.0",
     "react-native": "0.71.7",
     "react-native-collapsible": "^1.6.1",
+    "react-native-config": "^1.5.0",
     "react-native-flash-message": "^0.4.1",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-google-places-autocomplete": "^2.5.1",

@@ -6,8 +6,10 @@ import SliderCard from '../../components/cards/NearPage/SliderCard';
 import PlacesCard from '../../components/cards/NearPage/PlacesCard';
 import PlacesModal from '../../components/modals/PlacesModal';
 
-const NearPage = ({navigation}) => {
+const NearPage = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const {category, places} = route.params;
 
   function handlePlaceSelect() {
     setModalVisible(!modalVisible);
@@ -20,9 +22,9 @@ const NearPage = ({navigation}) => {
         translucent
         backgroundColor="rgba(0, 0, 0, 0)"
       />
-      <NearHeader navigation={navigation} />
+      <NearHeader navigation={navigation} category={category} />
       <SliderCard />
-      <PlacesCard onPress={handlePlaceSelect} />
+      <PlacesCard onPress={handlePlaceSelect} places={places} />
       <PlacesModal isVisible={modalVisible} onClose={handlePlaceSelect} />
     </View>
   );

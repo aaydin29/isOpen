@@ -9,65 +9,9 @@ import {
 } from 'react-native';
 import React, {useState, useCallback} from 'react';
 import colors from '../../../styles/colors';
+import Config from 'react-native-config';
 
-const dizi = [
-  {
-    id: 0,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 1,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 2,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 3,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 4,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 5,
-    name: 'Aydin Coffe Shop Market Place',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 6,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 7,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 8,
-    name: 'Cherry Cafe',
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-];
-
-const PlacesCard = ({onPress}) => {
+const PlacesCard = ({onPress, places}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -78,10 +22,23 @@ const PlacesCard = ({onPress}) => {
   }, []);
 
   function renderPlaces({item}) {
+    let photoUrl = null;
+
+    if (item.photos && item.photos.length > 0) {
+      photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${item.photos[0].photo_reference}&key=${Config.API_KEY}`;
+    }
     return (
       <View style={styles.info_container}>
         <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
-          <Image style={styles.image} source={{uri: item.image}} />
+          {photoUrl ? (
+            <Image style={styles.image} source={{uri: photoUrl}} />
+          ) : (
+            <Image
+              style={styles.image}
+              source={require('../../../assets/CategoryImages/defaultPlaces.png')}
+            />
+          )}
+
           <View style={styles.active_circle} />
           <View style={styles.back_text} />
           <Text
@@ -95,17 +52,13 @@ const PlacesCard = ({onPress}) => {
     );
   }
 
-  const keyExtractor = item => {
-    return item.id.toString();
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
-        data={dizi}
+        data={places}
         numColumns={2}
         renderItem={renderPlaces}
-        keyExtractor={keyExtractor}
+        keyExtractor={item => item.place_id}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl

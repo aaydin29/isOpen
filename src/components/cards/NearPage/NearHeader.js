@@ -4,7 +4,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 
 import {Back} from '../../icons';
 
-const NearHeader = ({navigation}) => {
+const NearHeader = ({navigation, category}) => {
   const [toggleSwitch, setToggleSwitch] = useState(false);
 
   function handleToggle() {
@@ -20,7 +20,7 @@ const NearHeader = ({navigation}) => {
       <TouchableOpacity onPress={handleGoBack} style={styles.back_icon}>
         <Back />
       </TouchableOpacity>
-      <Text style={styles.header_text}>Near Restaurants</Text>
+      <Text style={styles.header_text}>Near {category}s</Text>
       <ToggleSwitch
         isOn={toggleSwitch}
         onColor="#00BF63"
