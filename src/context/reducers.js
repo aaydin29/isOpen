@@ -1,9 +1,9 @@
 // reducers.js
-
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   placeList: {},
+  selectedPlace: null,
 };
 
 const placeSlice = createSlice({
@@ -17,8 +17,11 @@ const placeSlice = createSlice({
         [category]: place,
       };
     },
+    selectPlace: (state, action) => {
+      state.selectedPlace = action.payload;
+    },
   },
 });
 
-export const {addPlace} = placeSlice.actions;
+export const {addPlace, selectPlace} = placeSlice.actions;
 export default placeSlice.reducer;

@@ -5,14 +5,22 @@ import NearHeader from '../../components/cards/NearPage/NearHeader';
 import SliderCard from '../../components/cards/NearPage/SliderCard';
 import PlacesCard from '../../components/cards/NearPage/PlacesCard';
 import PlacesModal from '../../components/modals/PlacesModal';
+import {selectPlace} from '../../context/reducers';
+import {useDispatch} from 'react-redux';
 
 const NearPage = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const {category, places} = route.params;
 
-  function handlePlaceSelect() {
+  function handleSelect(item) {
+    dispatch(selectPlace(item));
     setModalVisible(!modalVisible);
+  }
+
+  function handleClose() {
+    setModalVisible(false);
   }
 
   return (
@@ -24,8 +32,8 @@ const NearPage = ({navigation, route}) => {
       />
       <NearHeader navigation={navigation} category={category} />
       <SliderCard />
-      <PlacesCard onPress={handlePlaceSelect} places={places} />
-      <PlacesModal isVisible={modalVisible} onClose={handlePlaceSelect} />
+      <PlacesCard places={places} onPress={handleSelect} />
+      <PlacesModal isVisible={modalVisible} onClose={handleClose} />
     </View>
   );
 };

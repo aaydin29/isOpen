@@ -11,7 +11,7 @@ import React, {useState, useCallback} from 'react';
 import colors from '../../../styles/colors';
 import Config from 'react-native-config';
 
-const PlacesCard = ({onPress, places}) => {
+const PlacesCard = ({places, onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -40,7 +40,7 @@ const PlacesCard = ({onPress, places}) => {
 
     return (
       <View style={styles.info_container}>
-        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => onPress(item)}>
           {photoUrl ? (
             <Image style={styles.image} source={{uri: photoUrl}} />
           ) : (

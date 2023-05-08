@@ -1,54 +1,103 @@
 import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from 'react-native-modal';
 import colors from '../../styles/colors';
-import {HeartWhite, Star} from '../icons';
+import Geolocation from '@react-native-community/geolocation';
 
-const imageURL =
-  'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg';
+import {useSelector} from 'react-redux';
+import {HeartWhite, Star} from '../icons';
+import Config from 'react-native-config';
 
 const PlacesModal = ({isVisible, onClose}) => {
+  const selectedPlace = useSelector(state => state.selectedPlace);
+  const [userLocation, setUserLocation] = useState(null);
+  const [distance, setDistance] = useState('Calculating...');
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setUserLocation({latitude, longitude});
+      },
+      error => {
+        console.log('An error occurred:', error);
+      },
+    );
+  }, []);
+
+  console.log(userLocation);
+
+  let photoUrl = null;
+
+  if (selectedPlace?.photos && selectedPlace?.photos?.length > 0) {
+    photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${selectedPlace.photos[0].photo_reference}&key=${Config.API_KEY}`;
+  }
+
+  let activeCircleColor = colors.starOrange;
+  let activeText = 'Unknown';
+
+  if (selectedPlace?.opening_hours) {
+    if (selectedPlace?.opening_hours?.open_now === true) {
+      activeCircleColor = colors.openGreen;
+      activeText = 'Open now';
+    } else if (selectedPlace?.opening_hours?.open_now === false) {
+      activeCircleColor = colors.closeRed;
+      activeText = 'Close now';
+    }
+  }
+
   return (
-    <Modal
-      style={styles.modal}
-      isVisible={isVisible}
-      swipeDirection="down"
-      onSwipeComplete={onClose}
-      onBackdropPress={onClose}
-      onBackButtonPress={onClose}>
-      <View style={styles.container}>
-        <View style={styles.nameAndheart}>
-          <Text style={styles.places_name}>Aydin Restaurant</Text>
-          <HeartWhite style={styles.heart_icon} />
-        </View>
-        <View style={styles.catAndrating}>
-          <Text style={styles.category}>Restaurant</Text>
-          <View style={styles.ratings_container}>
-            <Star style={styles.star_icon} />
-            <Text style={styles.rating}>4.8</Text>
-            <Text style={styles.ratingCounter}>(155)</Text>
+    <>
+      {selectedPlace && (
+        <Modal
+          style={styles.modal}
+          isVisible={isVisible}
+          swipeDirection="down"
+          onSwipeComplete={onClose}
+          onBackdropPress={onClose}
+          onBackButtonPress={onClose}>
+          <View style={styles.container}>
+            <View style={styles.nameAndheart}>
+              <Text style={styles.places_name}>{selectedPlace.name}</Text>
+              <HeartWhite style={styles.heart_icon} />
+            </View>
+            <View style={styles.catAndrating}>
+              <Text style={styles.category}>{selectedPlace.types[0]}</Text>
+              <View style={styles.ratings_container}>
+                <Star style={styles.star_icon} />
+                <Text style={styles.rating}>{selectedPlace.rating}</Text>
+                <Text style={styles.ratingCounter}>
+                  ({selectedPlace.user_ratings_total})
+                </Text>
+              </View>
+            </View>
+            <View style={styles.kmAndactive}>
+              <Text style={styles.km}>{distance}</Text>
+              <View
+                style={[styles.circle, {backgroundColor: activeCircleColor}]}
+              />
+
+              <Text style={styles.active}>{activeText}</Text>
+            </View>
+            <View style={styles.adress_container}>
+              <Text style={styles.adress}>
+                Adress: {selectedPlace.vicinity}
+              </Text>
+            </View>
+            <View style={styles.image_container}>
+              {photoUrl ? (
+                <Image style={styles.big_image} source={{uri: photoUrl}} />
+              ) : (
+                <Image
+                  style={styles.big_image}
+                  source={require('../../assets/CategoryImages/defaultPlaces.png')}
+                />
+              )}
+            </View>
           </View>
-        </View>
-        <View style={styles.kmAndactive}>
-          <Text style={styles.km}>1.2 km</Text>
-          <View style={styles.circle} />
-          <Text style={styles.active}>Open now (Close at 11 pm)</Text>
-        </View>
-        <View style={styles.adress_container}>
-          <Text style={styles.adress}>
-            Adress: 768 Mill Ave.Randolph, MA 023683768 Mill Ave.Randolph, MA
-            02368
-          </Text>
-        </View>
-        <View style={styles.image_container}>
-          <Image style={styles.big_image} source={{uri: imageURL}} />
-          <View style={styles.inner_image_container}>
-            <Image style={styles.small_image} source={{uri: imageURL}} />
-            <Image style={styles.small_image2} source={{uri: imageURL}} />
-          </View>
-        </View>
-      </View>
-    </Modal>
+        </Modal>
+      )}
+    </>
   );
 };
 
