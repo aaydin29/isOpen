@@ -4,12 +4,20 @@ import FavHeader from '../../components/cards/Favorites/FavHeader';
 import colors from '../../styles/colors';
 import FavPlacesCard from '../../components/cards/Favorites/FavPlacesCard';
 import PlacesModal from '../../components/modals/PlacesModal';
+import {useDispatch} from 'react-redux';
+import {selectPlace} from '../../context/reducers';
 
 const Favorites = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
-  function handlePlaceSelect() {
+  function handleSelect(item) {
+    dispatch(selectPlace(item));
     setModalVisible(!modalVisible);
+  }
+
+  function handleClose() {
+    setModalVisible(false);
   }
 
   return (
@@ -20,8 +28,8 @@ const Favorites = () => {
         backgroundColor="rgba(0, 0, 0, 0)"
       />
       <FavHeader />
-      <FavPlacesCard onPress={handlePlaceSelect} />
-      <PlacesModal isVisible={modalVisible} onClose={handlePlaceSelect} />
+      <FavPlacesCard onPress={handleSelect} />
+      <PlacesModal isVisible={modalVisible} onClose={handleClose} />
     </View>
   );
 };

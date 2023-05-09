@@ -1,17 +1,27 @@
-import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Modal from 'react-native-modal';
 import colors from '../../styles/colors';
 import Geolocation from '@react-native-community/geolocation';
-
-import {useSelector} from 'react-redux';
-import {HeartWhite, Star} from '../icons';
+import {useDispatch, useSelector} from 'react-redux';
+import {addFavoritePlace, removeFavoritePlace} from '../../context/reducers';
+import {HeartWhite, Star, HeartRed} from '../icons';
 import Config from 'react-native-config';
 
 const PlacesModal = ({isVisible, onClose}) => {
-  const selectedPlace = useSelector(state => state.selectedPlace);
   const [userLocation, setUserLocation] = useState(null);
   const [distance, setDistance] = useState('Calculating...');
+
+  const favoritePlaces = useSelector(state => state.favoritePlaces);
+  const selectedPlace = useSelector(state => state.selectedPlace);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -25,7 +35,27 @@ const PlacesModal = ({isVisible, onClose}) => {
     );
   }, []);
 
-  console.log(userLocation);
+  const handleAddFavorites = () => {
+    if (isFavorite()) {
+      dispatch(removeFavoritePlace(selectedPlace.place_id));
+    } else {
+      dispatch(addFavoritePlace(selectedPlace));
+    }
+  };
+
+  const isFavorite = () => {
+    return favoritePlaces.some(
+      place => place.place_id === selectedPlace.place_id,
+    );
+  };
+
+  const renderHeartIcon = () => {
+    if (isFavorite()) {
+      return <HeartRed style={styles.heart_icon} />;
+    } else {
+      return <HeartWhite style={styles.heart_icon} />;
+    }
+  };
 
   let photoUrl = null;
 
@@ -58,41 +88,50 @@ const PlacesModal = ({isVisible, onClose}) => {
           onBackButtonPress={onClose}>
           <View style={styles.container}>
             <View style={styles.nameAndheart}>
-              <Text style={styles.places_name}>{selectedPlace.name}</Text>
-              <HeartWhite style={styles.heart_icon} />
-            </View>
-            <View style={styles.catAndrating}>
-              <Text style={styles.category}>{selectedPlace.types[0]}</Text>
-              <View style={styles.ratings_container}>
-                <Star style={styles.star_icon} />
-                <Text style={styles.rating}>{selectedPlace.rating}</Text>
-                <Text style={styles.ratingCounter}>
-                  ({selectedPlace.user_ratings_total})
-                </Text>
-              </View>
-            </View>
-            <View style={styles.kmAndactive}>
-              <Text style={styles.km}>{distance}</Text>
-              <View
-                style={[styles.circle, {backgroundColor: activeCircleColor}]}
-              />
-
-              <Text style={styles.active}>{activeText}</Text>
-            </View>
-            <View style={styles.adress_container}>
-              <Text style={styles.adress}>
-                Adress: {selectedPlace.vicinity}
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.places_name}>
+                {selectedPlace.name}
               </Text>
+              <TouchableOpacity onPress={handleAddFavorites}>
+                {renderHeartIcon()}
+              </TouchableOpacity>
             </View>
-            <View style={styles.image_container}>
-              {photoUrl ? (
-                <Image style={styles.big_image} source={{uri: photoUrl}} />
-              ) : (
-                <Image
-                  style={styles.big_image}
-                  source={require('../../assets/CategoryImages/defaultPlaces.png')}
-                />
-              )}
+            <View style={styles.bottom_container}>
+              <View style={styles.image_container}>
+                {photoUrl ? (
+                  <Image style={styles.big_image} source={{uri: photoUrl}} />
+                ) : (
+                  <Image
+                    style={styles.big_image}
+                    source={require('../../assets/CategoryImages/defaultPlaces.png')}
+                  />
+                )}
+              </View>
+              <View style={styles.infos_container}>
+                <Text style={styles.adress}>
+                  Adress: {selectedPlace.vicinity}
+                </Text>
+                <Text style={styles.category}>{selectedPlace.types[0]}</Text>
+                <View style={styles.ratings_container}>
+                  <Star style={styles.star_icon} />
+                  <Text style={styles.rating}>{selectedPlace.rating}</Text>
+                  <Text style={styles.ratingCounter}>
+                    ({selectedPlace.user_ratings_total})
+                  </Text>
+                </View>
+                <View style={styles.active_container}>
+                  <View
+                    style={[
+                      styles.circle,
+                      {backgroundColor: activeCircleColor},
+                    ]}
+                  />
+                  <Text style={styles.active}>{activeText}</Text>
+                </View>
+                <Text style={styles.km}>{distance}</Text>
+              </View>
             </View>
           </View>
         </Modal>
@@ -113,7 +152,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.koyuGri,
     width: '100%',
-    height: deviceSize.height / 2.03,
+    height: deviceSize.height / 2.7,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     borderColor: colors.acikGri,
@@ -126,27 +165,54 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 20,
   },
+
   places_name: {
     fontSize: 20,
     fontWeight: 'bold',
     color: colors.acikGri,
+    flex: 1,
+    marginRight: 10,
   },
-  heart_icon: {},
-  catAndrating: {
+  heart_icon: {
+    flex: 1,
+    marginRight: 5,
+  },
+  bottom_container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 26,
-    padding: 6,
+    flex: 1,
+  },
+  image_container: {
+    marginLeft: 15,
+    marginBottom: 10,
+  },
+  big_image: {
+    width: 150,
+    height: 200,
+    borderRadius: 10,
+  },
+  infos_container: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    paddingLeft: 5,
+    height: 200,
+    marginBottom: 10,
+    justifyContent: 'center',
+  },
+  adress: {
+    fontSize: 16,
+    color: colors.acikGri,
+    marginBottom: 10,
   },
   category: {
     fontSize: 16,
     color: colors.acikGri,
-    flex: 2,
   },
   ratings_container: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 2,
+    marginVertical: 10,
   },
   star_icon: {
     marginRight: 5,
@@ -161,16 +227,15 @@ const styles = StyleSheet.create({
     color: colors.acikGri,
     fontSize: 16,
   },
-  kmAndactive: {
+  active_container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 6,
-    paddingHorizontal: 26,
+    marginBottom: 10,
   },
   km: {
-    flex: 1,
     fontSize: 16,
     color: colors.acikGri,
+    marginBottom: 10,
   },
   circle: {
     width: 15,
@@ -183,39 +248,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 30,
     color: colors.acikGri,
-  },
-  adress_container: {
-    paddingHorizontal: 26,
-    padding: 6,
-  },
-  adress: {
-    fontSize: 16,
-    color: colors.acikGri,
-  },
-  image_container: {
-    flexDirection: 'row',
-    height: 209,
-    paddingTop: 10,
-    paddingBottom: 21,
-    paddingHorizontal: 26,
-  },
-  big_image: {
-    width: 166,
-    height: 171,
-    borderRadius: 10,
-  },
-  inner_image_container: {
-    marginLeft: 20,
-  },
-  small_image: {
-    width: 139,
-    height: 78,
-    marginBottom: 14,
-    borderRadius: 10,
-  },
-  small_image2: {
-    width: 139,
-    height: 78,
-    borderRadius: 10,
   },
 });

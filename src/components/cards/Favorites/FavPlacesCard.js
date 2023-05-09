@@ -8,12 +8,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState, useCallback} from 'react';
+import {useSelector} from 'react-redux';
+import Config from 'react-native-config';
 
 import colors from '../../../styles/colors';
 import {Star} from '../../icons';
 
 const FavPlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
+
+  const favoritePlaces = useSelector(state => state.favoritePlaces);
+  const favoritePlacesArray = Object.values(favoritePlaces);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -23,10 +28,16 @@ const FavPlacesCard = ({onPress}) => {
   }, []);
 
   function renderPlaces({item}) {
+    let photoUrl = null;
+
+    if (item?.photos && item?.photos?.length > 0) {
+      photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${item?.photos[0].photo_reference}&key=${Config.API_KEY}`;
+    }
+
     return (
       <View style={styles.render_container}>
-        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
-          <Image style={styles.image} source={{uri: item.image}} />
+        <TouchableOpacity activeOpacity={0.7} onPress={() => onPress(item)}>
+          <Image style={styles.image} source={{uri: photoUrl}} />
           <View style={styles.info_container}>
             <View style={styles.nameAndcircle}>
               <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
@@ -35,7 +46,7 @@ const FavPlacesCard = ({onPress}) => {
               <View style={styles.circle} />
             </View>
             <View style={styles.catAndrating}>
-              <Text style={styles.category}>{item.category}</Text>
+              <Text style={styles.category}>{item.types[0]}</Text>
               <Star style={styles.star} />
               <Text style={styles.rating}>{item.rating}</Text>
             </View>
@@ -46,14 +57,14 @@ const FavPlacesCard = ({onPress}) => {
     );
   }
 
-  const keyExtractor = item => {
-    return item.id.toString();
+  const keyExtractor = (item, index) => {
+    return item.place_id;
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={dizi}
+        data={favoritePlacesArray}
         numColumns={2}
         renderItem={renderPlaces}
         keyExtractor={keyExtractor}
@@ -84,7 +95,6 @@ const styles = StyleSheet.create({
   },
   render_container: {
     width: 154,
-    height: 205,
     borderRadius: 10,
     marginBottom: 31,
     backgroundColor: 'rgba(211, 211, 211, 0.15)',
@@ -104,6 +114,7 @@ const styles = StyleSheet.create({
   nameAndcircle: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 4,
   },
   name: {
     fontSize: 16,
@@ -121,6 +132,7 @@ const styles = StyleSheet.create({
   catAndrating: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 4,
   },
   category: {
     flex: 3,
@@ -139,78 +151,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-
-const dizi = [
-  {
-    id: 0,
-    name: 'Cherry Cafeeeeeeeee',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 1,
-    name: 'Cherry Cafeeeeeeeee',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 2,
-    name: 'Cherry Cafe',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 3,
-    name: 'Cherry Cafeeeeeeeeeeeeeeee',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 4,
-    name: 'Cherry Cafe',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 5,
-    name: 'Cherry Cafe',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 6,
-    name: 'Cherry Cafe',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 7,
-    name: 'Cherry Cafe',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-  {
-    id: 8,
-    name: 'Cherry Cafe',
-    category: 'Restaurant',
-    rating: 4.3,
-    image:
-      'https://heytripster.com/wp-content/uploads/2020/05/the-best-restaurants-in-istanbul-min.jpg',
-  },
-];
