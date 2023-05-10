@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import Modal from 'react-native-modal';
 import colors from '../../styles/colors';
 import Geolocation from '@react-native-community/geolocation';
@@ -77,7 +77,7 @@ const PlacesModal = ({isVisible, onClose}) => {
   }
 
   return (
-    <>
+    <Fragment>
       {selectedPlace && (
         <Modal
           style={styles.modal}
@@ -136,7 +136,7 @@ const PlacesModal = ({isVisible, onClose}) => {
           </View>
         </Modal>
       )}
-    </>
+    </Fragment>
   );
 };
 

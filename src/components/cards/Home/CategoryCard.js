@@ -42,7 +42,7 @@ const CategoryCard = ({navigation}) => {
       // const {latitude, longitude} = userLocation();
       const lat = 40.9802;
       const long = 29.0269;
-      const radius = 10000; // 10 km
+      const radius = 5000; // 10 km
 
       axios
         .get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
@@ -136,7 +136,7 @@ const placesData = [
   {
     id: 2,
     category: 'Hotel',
-    apiType: 'lodging', // Otel
+    apiType: 'lodging',
     image: require('../../../assets/CategoryImages/hotels.jpg'),
   },
   {
@@ -160,7 +160,7 @@ const placesData = [
   {
     id: 6,
     category: 'Cinema',
-    apiType: 'movie_theater', // Sinema
+    apiType: 'movie_theater',
     image: require('../../../assets/CategoryImages/cinemas.jpg'),
   },
   {

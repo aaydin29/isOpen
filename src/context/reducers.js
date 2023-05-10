@@ -1,10 +1,12 @@
 // reducers.js
+
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   placeList: {},
   selectedPlace: null,
   favoritePlaces: [],
+  modalVisible: false,
 };
 
 const placeSlice = createSlice({
@@ -21,6 +23,9 @@ const placeSlice = createSlice({
     selectPlace: (state, action) => {
       state.selectedPlace = action.payload;
     },
+    modalVisible: (state, action) => {
+      state.modalVisible = action.payload;
+    },
     addFavoritePlace: (state, action) => {
       const place = action.payload;
       state.favoritePlaces.push(place);
@@ -34,6 +39,11 @@ const placeSlice = createSlice({
   },
 });
 
-export const {addPlace, selectPlace, addFavoritePlace, removeFavoritePlace} =
-  placeSlice.actions;
+export const {
+  addPlace,
+  selectPlace,
+  addFavoritePlace,
+  removeFavoritePlace,
+  modalVisible,
+} = placeSlice.actions;
 export default placeSlice.reducer;
