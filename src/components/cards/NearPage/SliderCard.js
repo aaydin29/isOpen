@@ -1,9 +1,25 @@
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import Slider from '@react-native-community/slider';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import Geolocation from '@react-native-community/geolocation';
 
 const SliderCard = () => {
-  const [km, setKm] = useState(2.5);
+  const [userLocation, setUserLocation] = useState(null);
+  const [km, setKm] = useState(5);
+
+  console.log(userLocation);
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setUserLocation({latitude, longitude});
+      },
+      error => {
+        console.log('An error occurred:', error);
+      },
+    );
+  }, []);
 
   const onSliderValueChange = value => {
     setKm(value);
@@ -17,7 +33,7 @@ const SliderCard = () => {
         value={km}
         step={0.5}
         minimumValue={0.5}
-        maximumValue={5}
+        maximumValue={10}
         onValueChange={onSliderValueChange}
         minimumTrackTintColor="#FFFFFF"
         maximumTrackTintColor="#fff"
