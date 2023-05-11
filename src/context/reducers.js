@@ -7,6 +7,7 @@ const initialState = {
   selectedPlace: null,
   favoritePlaces: [],
   modalVisible: false,
+  toggleSwitch: false,
 };
 
 const placeSlice = createSlice({
@@ -25,6 +26,9 @@ const placeSlice = createSlice({
     },
     modalVisible: (state, action) => {
       state.modalVisible = action.payload;
+    },
+    onToggleSwitch: (state, action) => {
+      state.toggleSwitch = action.payload;
     },
     addFavoritePlace: (state, action) => {
       const place = action.payload;
@@ -45,5 +49,6 @@ export const {
   addFavoritePlace,
   removeFavoritePlace,
   modalVisible,
+  onToggleSwitch,
 } = placeSlice.actions;
 export default placeSlice.reducer;

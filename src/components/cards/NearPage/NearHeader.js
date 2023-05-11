@@ -1,14 +1,17 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {onToggleSwitch} from '../../../context/reducers';
 
 import {Back} from '../../icons';
 
 const NearHeader = ({navigation, category}) => {
-  const [toggleSwitch, setToggleSwitch] = useState(false);
+  const toggleSwitch = useSelector(state => state.toggleSwitch);
+  const dispatch = useDispatch();
 
   function handleToggle() {
-    setToggleSwitch(!toggleSwitch);
+    dispatch(onToggleSwitch(!toggleSwitch));
   }
 
   function handleGoBack() {

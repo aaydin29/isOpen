@@ -1,12 +1,15 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {onToggleSwitch} from '../../../context/reducers';
 
 const FavHeader = () => {
-  const [toggleSwitch, setToggleSwitch] = useState(false);
+  const toggleSwitch = useSelector(state => state.toggleSwitch);
+  const dispatch = useDispatch();
 
   function handleToggle() {
-    setToggleSwitch(!toggleSwitch);
+    dispatch(onToggleSwitch(!toggleSwitch));
   }
 
   return (

@@ -10,9 +10,11 @@ import {
 import React, {useState, useCallback} from 'react';
 import colors from '../../../styles/colors';
 import Config from 'react-native-config';
+import {useSelector} from 'react-redux';
 
 const PlacesCard = ({places, onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
+  const toggleSwitch = useSelector(state => state.toggleSwitch);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -67,7 +69,13 @@ const PlacesCard = ({places, onPress}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={places}
+        data={
+          toggleSwitch
+            ? places.filter(
+                item => item.opening_hours && item.opening_hours.open_now,
+              )
+            : places
+        }
         numColumns={2}
         renderItem={renderPlaces}
         keyExtractor={item => item.place_id}

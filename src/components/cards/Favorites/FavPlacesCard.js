@@ -17,6 +17,7 @@ import {Star} from '../../icons';
 const FavPlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
 
+  const toggleSwitch = useSelector(state => state.toggleSwitch);
   const favoritePlaces = useSelector(state => state.favoritePlaces);
   const favoritePlacesArray = Object.values(favoritePlaces);
 
@@ -34,6 +35,16 @@ const FavPlacesCard = ({onPress}) => {
       photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${item?.photos[0].photo_reference}&key=${Config.API_KEY}`;
     }
 
+    let activeCircleColor = colors.starOrange;
+
+    if (item.opening_hours) {
+      if (item.opening_hours.open_now === true) {
+        activeCircleColor = colors.openGreen;
+      } else if (item.opening_hours.open_now === false) {
+        activeCircleColor = colors.closeRed;
+      }
+    }
+
     return (
       <View style={styles.render_container}>
         <TouchableOpacity activeOpacity={0.7} onPress={() => onPress(item)}>
@@ -43,7 +54,12 @@ const FavPlacesCard = ({onPress}) => {
               <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
                 {item.name}
               </Text>
-              <View style={styles.circle} />
+              <View
+                style={[
+                  styles.active_circle,
+                  {backgroundColor: activeCircleColor},
+                ]}
+              />
             </View>
             <View style={styles.catAndrating}>
               <Text style={styles.category}>{item.types[0]}</Text>
@@ -64,7 +80,13 @@ const FavPlacesCard = ({onPress}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={favoritePlacesArray}
+        data={
+          toggleSwitch
+            ? favoritePlacesArray.filter(
+                item => item.opening_hours && item.opening_hours.open_now,
+              )
+            : favoritePlacesArray
+        }
         numColumns={2}
         renderItem={renderPlaces}
         keyExtractor={keyExtractor}
@@ -122,7 +144,7 @@ const styles = StyleSheet.create({
     color: colors.acikGri,
     flex: 1,
   },
-  circle: {
+  active_circle: {
     width: 15,
     height: 15,
     borderRadius: 8,
