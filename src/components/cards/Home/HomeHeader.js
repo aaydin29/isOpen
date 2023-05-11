@@ -21,9 +21,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 45,
+    flex: 1,
+    width: '100%',
   },
   menu: {
-    marginLeft: 23,
-    marginRight: -10,
+    marginLeft: 18,
+    marginBottom: 8,
   },
 });

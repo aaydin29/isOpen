@@ -34,8 +34,13 @@ const Home = ({navigation}) => {
         translucent
         backgroundColor="rgba(0, 0, 0, 0)"
       />
-      <HomeHeader onPress={handleMenu} />
-      <CategoryCard navigation={navigation} />
+
+      <View style={styles.category_container}>
+        <CategoryCard navigation={navigation} />
+      </View>
+      <View style={styles.header_container}>
+        <HomeHeader onPress={handleMenu} />
+      </View>
       <FeedbackModal isVisible={feedbackModalVisible} onClose={handleMenu} />
       <PlacesModal isVisible={placesModalVisible} onClose={handleClosePlace} />
     </View>
@@ -48,5 +53,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.koyuGri,
     flex: 1,
+  },
+  header_container: {
+    flex: 1,
+    position: 'absolute',
+  },
+  category_container: {
+    flex: 1,
+    marginTop: 100,
   },
 });

@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 95,
     left: 0,
+    flex: 1,
   },
   container: {
     width: 349,

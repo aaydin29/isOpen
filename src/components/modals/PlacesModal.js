@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'flex-end',
     margin: 0,
+    flex: 1,
   },
   container: {
     backgroundColor: colors.koyuGri,

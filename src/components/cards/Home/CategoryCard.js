@@ -96,8 +96,11 @@ export default CategoryCard;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 27,
-    marginBottom: 80,
+    marginTop: 10,
+    // marginBottom: 80,
+    flex: 9,
+    width: '100%',
+    height: '100%',
   },
   info_container: {
     marginBottom: 21,
@@ -109,7 +112,6 @@ const styles = StyleSheet.create({
     width: 360,
     height: 165,
     borderRadius: 10,
-    opacity: 0.8,
   },
   category_name: {
     color: 'white',

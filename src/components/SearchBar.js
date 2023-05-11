@@ -1,18 +1,26 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useRef} from 'react';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {Search} from './icons';
 import Config from 'react-native-config';
 import {useDispatch} from 'react-redux';
 
 import {selectPlace, modalVisible} from '../context/reducers';
+import colors from '../styles/colors';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
+  const InputRef = useRef(null);
+
+  function handleClearText() {
+    InputRef.current.clear();
+  }
 
   return (
     <View style={styles.container}>
+      <Search style={styles.searchIcon} />
       <GooglePlacesAutocomplete
+        ref={InputRef}
         placeholder="Search place..."
         styles={styles.input}
         fetchDetails
@@ -24,8 +32,16 @@ const SearchBar = () => {
           key: Config.API_KEY,
           language: 'en',
         }}
+        textInputProps={{
+          placeholderTextColor: 'white',
+        }}
       />
-      <Search style={styles.searchIcon} />
+      <TouchableOpacity
+        style={styles.x_container}
+        activeOpacity={0.5}
+        onPress={handleClearText}>
+        <Text style={styles.x}>x</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -34,11 +50,24 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 55,
   },
   searchIcon: {
     position: 'absolute',
+    left: 30,
+    top: 9,
+  },
+  x_container: {
+    position: 'absolute',
+    flex: 1,
     right: 70,
-    top: 10,
+    top: 6,
+    alignItems: 'center',
+    width: 25,
+  },
+  x: {
+    color: colors.beyaz,
+    fontSize: 20,
   },
   input: {
     container: {
@@ -50,21 +79,21 @@ const styles = StyleSheet.create({
       marginLeft: 22,
       borderRadius: 10,
       backgroundColor: 'rgba(217, 217, 217, 0.2)',
-      paddingLeft: 15,
+      paddingLeft: 37,
       color: 'white',
+      paddingRight: 35,
     },
     listView: {
       backgroundColor: 'white',
-      borderWidth: 1,
-      borderRadius: 10,
+      borderRadius: 5,
       borderColor: '#e0e0e0',
-      marginTop: 5,
+      position: 'absolute',
+      top: 50,
     },
     row: {
-      padding: 10,
-      borderBottomWidth: 1,
-      borderRadius: 10,
       borderColor: '#e0e0e0',
+      margin: 5,
+      marginLeft: 0,
     },
   },
 });
