@@ -2,7 +2,6 @@ import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useState} from 'react';
 import colors from '../../styles/colors';
 import NearHeader from '../../components/cards/NearPage/NearHeader';
-import SliderCard from '../../components/cards/NearPage/SliderCard';
 import PlacesCard from '../../components/cards/NearPage/PlacesCard';
 import PlacesModal from '../../components/modals/PlacesModal';
 import {selectPlace} from '../../context/reducers';
