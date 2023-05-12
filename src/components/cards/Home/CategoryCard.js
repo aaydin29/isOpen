@@ -33,21 +33,19 @@ const CategoryCard = ({navigation}) => {
   function HandleSelectCategory(item) {
     const categoryData = placeList?.[item.category];
     if (categoryData) {
-      // Redux store'da veri varsa, veriyi kullanın
       navigation.navigate('NearPage', {
         category: item.category,
         places: categoryData,
       });
     } else {
-      // const {latitude, longitude} = userLocation();
-      const lat = 40.9802;
-      const long = 29.0269;
-      const radius = 5000; // 10 km
+      const lat = userLocation.latitude;
+      const lng = userLocation.longitude;
+      const radius = 10000;
 
       axios
         .get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
           params: {
-            location: `${lat},${long}`,
+            location: `${lat},${lng}`,
             radius: radius,
             type: item.apiType,
             key: Config.API_KEY,
@@ -97,7 +95,6 @@ export default CategoryCard;
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    // marginBottom: 80,
     flex: 9,
     width: '100%',
     height: '100%',
