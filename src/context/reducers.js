@@ -8,6 +8,8 @@ const initialState = {
   favoritePlaces: [],
   modalVisible: false,
   toggleSwitch: false,
+  nearPlacesDistance: [],
+  selectedCategory: null,
 };
 
 const placeSlice = createSlice({
@@ -23,6 +25,12 @@ const placeSlice = createSlice({
     },
     selectPlace: (state, action) => {
       state.selectedPlace = action.payload;
+    },
+    addDistance: (state, action) => {
+      state.nearPlacesDistance = action.payload;
+    },
+    selectCategory: (state, action) => {
+      state.selectedCategory = action.payload;
     },
     modalVisible: (state, action) => {
       state.modalVisible = action.payload;
@@ -50,5 +58,7 @@ export const {
   removeFavoritePlace,
   modalVisible,
   onToggleSwitch,
+  addDistance,
+  selectCategory,
 } = placeSlice.actions;
 export default placeSlice.reducer;

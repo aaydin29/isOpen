@@ -11,7 +11,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Config from 'react-native-config';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
-import {addPlace} from '../../../context/reducers';
+import {addPlace, selectCategory} from '../../../context/reducers';
 
 const CategoryCard = ({navigation}) => {
   const [userLocation, setUserLocation] = useState(null);
@@ -54,6 +54,7 @@ const CategoryCard = ({navigation}) => {
         .then(response => {
           const places = response.data.results;
           dispatch(addPlace({category: item.category, place: places}));
+          dispatch(selectCategory(item.category));
 
           navigation.navigate('NearPage', {
             category: item.category,
