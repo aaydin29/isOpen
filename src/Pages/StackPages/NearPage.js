@@ -31,8 +31,9 @@ const NearPage = ({navigation, route}) => {
         backgroundColor="rgba(0, 0, 0, 0)"
       />
       <NearHeader navigation={navigation} category={category} />
-      <SliderCard />
-      <PlacesCard places={places} onPress={handleSelect} />
+      <View style={styles.places_container}>
+        <PlacesCard places={places} onPress={handleSelect} />
+      </View>
       <PlacesModal isVisible={modalVisible} onClose={handleClose} />
     </View>
   );
@@ -44,5 +45,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.koyuGri,
     flex: 1,
+  },
+  places_container: {
+    flex: 1,
+    marginTop: 30,
   },
 });

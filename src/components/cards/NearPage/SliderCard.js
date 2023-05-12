@@ -1,25 +1,9 @@
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import Slider from '@react-native-community/slider';
-import React, {useState, useEffect} from 'react';
-import Geolocation from '@react-native-community/geolocation';
+import React, {useState} from 'react';
 
 const SliderCard = () => {
-  const [userLocation, setUserLocation] = useState(null);
   const [km, setKm] = useState(5);
-
-  console.log(userLocation);
-
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        setUserLocation({latitude, longitude});
-      },
-      error => {
-        console.log('An error occurred:', error);
-      },
-    );
-  }, []);
 
   const onSliderValueChange = value => {
     setKm(value);
