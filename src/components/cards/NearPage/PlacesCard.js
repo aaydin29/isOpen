@@ -15,6 +15,11 @@ import {useSelector} from 'react-redux';
 const PlacesCard = ({places, onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
   const toggleSwitch = useSelector(state => state.toggleSwitch);
+  const filteredPlaces = useSelector(state => state.filteredPlaces);
+
+  let dataToShow = toggleSwitch
+    ? filteredPlaces.filter(item => item.opening_hours?.open_now)
+    : filteredPlaces;
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -33,11 +38,9 @@ const PlacesCard = ({places, onPress}) => {
     let activeCircleColor = colors.starOrange;
 
     if (item.opening_hours) {
-      if (item.opening_hours.open_now === true) {
-        activeCircleColor = colors.openGreen;
-      } else if (item.opening_hours.open_now === false) {
-        activeCircleColor = colors.closeRed;
-      }
+      activeCircleColor = item.opening_hours.open_now
+        ? (activeCircleColor = colors.openGreen)
+        : (activeCircleColor = colors.closeRed);
     }
 
     return (
@@ -69,13 +72,7 @@ const PlacesCard = ({places, onPress}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={
-          toggleSwitch
-            ? places.filter(
-                item => item.opening_hours && item.opening_hours.open_now,
-              )
-            : places
-        }
+        data={dataToShow}
         numColumns={2}
         renderItem={renderPlaces}
         keyExtractor={item => item.place_id}
