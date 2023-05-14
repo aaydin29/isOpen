@@ -74,7 +74,7 @@ const FavPlacesCard = ({onPress}) => {
                 style={styles.category}
                 numberOfLines={1}
                 ellipsizeMode="tail">
-                {item.types[0]}
+                {item.types[0].charAt(0).toUpperCase() + item.types[0].slice(1)}
               </Text>
               <Star style={styles.star} />
               <Text style={styles.rating}>{item.rating}</Text>
@@ -86,7 +86,7 @@ const FavPlacesCard = ({onPress}) => {
     );
   }
 
-  const keyExtractor = (item, index) => {
+  const keyExtractor = item => {
     return item.place_id;
   };
 

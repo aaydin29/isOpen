@@ -40,7 +40,7 @@ const SearchBar = () => {
         style={styles.x_container}
         activeOpacity={0.5}
         onPress={handleClearText}>
-        <Text style={styles.x}>x</Text>
+        <Text style={styles.x}>X</Text>
       </TouchableOpacity>
     </View>
   );
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
   },
   x: {
     color: colors.beyaz,
-    fontSize: 20,
+    fontSize: 13,
+    marginTop: 6,
   },
   input: {
     container: {

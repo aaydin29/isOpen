@@ -154,7 +154,10 @@ const PlacesModal = ({isVisible, onClose}) => {
                 <Text style={styles.adress}>
                   Adress: {selectedPlace.vicinity}
                 </Text>
-                <Text style={styles.category}>{selectedPlace.types[0]}</Text>
+                <Text style={styles.category}>
+                  {selectedPlace.types[0].charAt(0).toUpperCase() +
+                    selectedPlace.types[0].slice(1)}
+                </Text>
                 <View style={styles.ratings_container}>
                   <Star style={styles.star_icon} />
                   <Text style={styles.rating}>{selectedPlace.rating}</Text>
