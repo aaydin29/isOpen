@@ -12,7 +12,7 @@ import colors from '../../../styles/colors';
 import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
 
-const PlacesCard = ({places, onPress}) => {
+const PlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
   const toggleSwitch = useSelector(state => state.toggleSwitch);
   const filteredPlaces = useSelector(state => state.filteredPlaces);

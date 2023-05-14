@@ -16,7 +16,6 @@ import {Star} from '../../icons';
 
 const FavPlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);
-
   const toggleSwitch = useSelector(state => state.toggleSwitch);
   const favoritePlaces = useSelector(state => state.favoritePlaces);
   const favoritePlacesArray = Object.values(favoritePlaces);
@@ -45,6 +44,15 @@ const FavPlacesCard = ({onPress}) => {
       }
     }
 
+    let distanceText = '';
+
+    if (item.distance < 1) {
+      const meters = item.distance * 1000;
+      distanceText = meters.toFixed(0) + ' m';
+    } else {
+      distanceText = (Math.floor(item.distance * 10) / 10).toFixed(1) + ' km';
+    }
+
     return (
       <View style={styles.render_container}>
         <TouchableOpacity activeOpacity={0.7} onPress={() => onPress(item)}>
@@ -62,11 +70,16 @@ const FavPlacesCard = ({onPress}) => {
               />
             </View>
             <View style={styles.catAndrating}>
-              <Text style={styles.category}>{item.types[0]}</Text>
+              <Text
+                style={styles.category}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {item.types[0]}
+              </Text>
               <Star style={styles.star} />
               <Text style={styles.rating}>{item.rating}</Text>
             </View>
-            <Text style={styles.km}>1.2 km</Text>
+            <Text style={styles.km}>{distanceText}</Text>
           </View>
         </TouchableOpacity>
       </View>
