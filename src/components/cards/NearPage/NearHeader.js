@@ -2,8 +2,8 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {onToggleSwitch} from '../../../context/reducers';
 
+import {onToggleSwitch} from '../../../context/reducers';
 import {Back} from '../../icons';
 
 const NearHeader = ({navigation, category}) => {
@@ -20,7 +20,7 @@ const NearHeader = ({navigation, category}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleGoBack} style={styles.back_icon}>
+      <TouchableOpacity onPress={handleGoBack}>
         <Back />
       </TouchableOpacity>
       <Text style={styles.header_text}>Near {category}s</Text>
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     paddingBottom: 15,
   },
-  back_icon: {},
   header_text: {
     color: 'white',
     fontSize: 20,

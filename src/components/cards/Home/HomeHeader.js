@@ -1,7 +1,8 @@
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React from 'react';
-import SearchBar from '../../SearchBar/SearchBar';
+
 import {Menu} from '../../icons';
+import SearchBar from '../../SearchBar/SearchBar';
 
 const HomeHeader = ({onPress}) => {
   return (

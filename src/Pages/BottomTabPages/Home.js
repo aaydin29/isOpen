@@ -1,8 +1,8 @@
 import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {modalVisible, feedbackVisible} from '../../context/reducers';
 
+import {modalVisible, feedbackVisible} from '../../context/reducers';
 import colors from '../../styles/colors';
 import HomeHeader from '../../components/cards/Home/HomeHeader';
 import CategoryCard from '../../components/cards/Home/CategoryCard';

@@ -1,12 +1,13 @@
 import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+
+import {selectPlace} from '../../context/reducers';
 import colors from '../../styles/colors';
 import NearHeader from '../../components/cards/NearPage/NearHeader';
 import PlacesCard from '../../components/cards/NearPage/PlacesCard';
 import SliderCard from '../../components/cards/NearPage/SliderCard';
 import PlacesModal from '../../components/modals/PlacesModal';
-import {selectPlace} from '../../context/reducers';
-import {useDispatch} from 'react-redux';
 
 const NearPage = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);

@@ -3,6 +3,7 @@ import Slider from '@react-native-community/slider';
 import React, {useState, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {useSelector, useDispatch} from 'react-redux';
+
 import {addFilteredPlaces} from '../../../context/reducers';
 
 const SliderCard = () => {

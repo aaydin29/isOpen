@@ -1,11 +1,12 @@
 import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useState} from 'react';
-import FavHeader from '../../components/cards/Favorites/FavHeader';
+import {useDispatch} from 'react-redux';
+
+import {selectPlace} from '../../context/reducers';
 import colors from '../../styles/colors';
+import FavHeader from '../../components/cards/Favorites/FavHeader';
 import FavPlacesCard from '../../components/cards/Favorites/FavPlacesCard';
 import PlacesModal from '../../components/modals/PlacesModal';
-import {useDispatch} from 'react-redux';
-import {selectPlace} from '../../context/reducers';
 
 const Favorites = () => {
   const [modalVisible, setModalVisible] = useState(false);

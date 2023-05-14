@@ -8,9 +8,10 @@ import {
   RefreshControl,
 } from 'react-native';
 import React, {useState, useCallback} from 'react';
-import colors from '../../../styles/colors';
 import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
+
+import colors from '../../../styles/colors';
 
 const PlacesCard = ({onPress}) => {
   const [refreshing, setRefreshing] = useState(false);

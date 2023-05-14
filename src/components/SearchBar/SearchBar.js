@@ -1,12 +1,12 @@
 import React, {useRef} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {Search} from '../icons';
 import Config from 'react-native-config';
 import {useDispatch} from 'react-redux';
 
-import {selectPlace, modalVisible} from '../../context/reducers';
 import colors from '../../styles/colors';
+import {Search} from '../icons';
+import {selectPlace, modalVisible} from '../../context/reducers';
 
 const SearchBar = () => {
   const dispatch = useDispatch();

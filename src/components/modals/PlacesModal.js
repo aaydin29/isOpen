@@ -13,8 +13,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import Config from 'react-native-config';
 
 import colors from '../../styles/colors';
-import {addFavoritePlace, removeFavoritePlace} from '../../context/reducers';
 import {HeartWhite, Star, HeartRed} from '../icons';
+import {addFavoritePlace, removeFavoritePlace} from '../../context/reducers';
 
 const PlacesModal = ({isVisible, onClose}) => {
   const [userLocation, setUserLocation] = useState(null);

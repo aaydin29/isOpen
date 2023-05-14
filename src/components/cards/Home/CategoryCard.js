@@ -11,6 +11,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Config from 'react-native-config';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {addPlace, selectCategory} from '../../../context/reducers';
 import Loading from '../../Loading/Loading';
 
