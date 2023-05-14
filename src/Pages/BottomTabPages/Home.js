@@ -10,7 +10,6 @@ import FeedbackModal from '../../components/modals/FeedbackModal';
 import PlacesModal from '../../components/modals/PlacesModal';
 
 const Home = ({navigation}) => {
-  // const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
   const [placesModalVisible, setPlacesModalVisible] = useState(false);
   const dispatch = useDispatch();
   const placesVisible = useSelector(state => state.modalVisible);

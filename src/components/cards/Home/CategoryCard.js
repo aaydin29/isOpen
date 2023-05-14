@@ -13,11 +13,9 @@ import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {addPlace, selectCategory} from '../../../context/reducers';
-import Loading from '../../Loading/Loading';
 
 const CategoryCard = ({navigation}) => {
   const [userLocation, setUserLocation] = useState(null);
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const placeList = useSelector(state => state.placeList);
 
@@ -34,10 +32,8 @@ const CategoryCard = ({navigation}) => {
   }, []);
 
   function HandleSelectCategory(item) {
-    setLoading(true);
     const categoryData = placeList?.[item.category];
     if (categoryData) {
-      setLoading(false);
       navigation.navigate('NearPage', {
         category: item.category,
         places: categoryData,
@@ -60,7 +56,6 @@ const CategoryCard = ({navigation}) => {
           const places = response.data.results;
           dispatch(addPlace({category: item.category, place: places}));
           dispatch(selectCategory(item.category));
-          setLoading(false);
           navigation.navigate('NearPage', {
             category: item.category,
             places: places,
@@ -70,10 +65,6 @@ const CategoryCard = ({navigation}) => {
           console.log('An error occurred:', error);
         });
     }
-  }
-
-  if (loading) {
-    return <Loading />;
   }
 
   function renderCategories({item}) {
