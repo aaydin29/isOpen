@@ -1,5 +1,3 @@
-// reducers.js
-
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
@@ -7,6 +5,7 @@ const initialState = {
   selectedPlace: null,
   favoritePlaces: [],
   modalVisible: false,
+  feedbackModalVisible: false,
   toggleSwitch: false,
   nearPlacesDistance: [],
   selectedCategory: null,
@@ -35,6 +34,9 @@ const placeSlice = createSlice({
     },
     modalVisible: (state, action) => {
       state.modalVisible = action.payload;
+    },
+    feedbackVisible: (state, action) => {
+      state.feedbackModalVisible = action.payload;
     },
     addFilteredPlaces: (state, action) => {
       state.filteredPlaces = action.payload;
@@ -65,5 +67,6 @@ export const {
   addDistance,
   selectCategory,
   addFilteredPlaces,
+  feedbackVisible,
 } = placeSlice.actions;
 export default placeSlice.reducer;

@@ -8,12 +8,13 @@ import {
 } from 'react-native';
 import React, {useState, useEffect, Fragment} from 'react';
 import Modal from 'react-native-modal';
-import colors from '../../styles/colors';
 import Geolocation from '@react-native-community/geolocation';
 import {useDispatch, useSelector} from 'react-redux';
+import Config from 'react-native-config';
+
+import colors from '../../styles/colors';
 import {addFavoritePlace, removeFavoritePlace} from '../../context/reducers';
 import {HeartWhite, Star, HeartRed} from '../icons';
-import Config from 'react-native-config';
 
 const PlacesModal = ({isVisible, onClose}) => {
   const [userLocation, setUserLocation] = useState(null);

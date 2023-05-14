@@ -2,6 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import FlashMessage from 'react-native-flash-message';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ const Router = () => {
           <Stack.Screen name="BottomTab" component={BottomTab} />
           <Stack.Screen name="NearPage" component={NearPage} />
         </Stack.Navigator>
+        <FlashMessage position="top" />
       </NavigationContainer>
     </PlaceProvider>
   );

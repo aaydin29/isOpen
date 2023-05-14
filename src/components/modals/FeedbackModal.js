@@ -9,16 +9,29 @@ import {
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import Collapsible from 'react-native-collapsible';
+import {showMessage} from 'react-native-flash-message';
+import {useDispatch} from 'react-redux';
+
 import colors from '../../styles/colors';
+import {feedbackVisible} from '../../context/reducers';
 
 const FeedbackModal = ({isVisible, onClose}) => {
   const [isCollapsible, setIsCollapsible] = useState(false);
+  const dispatch = useDispatch();
 
   function handleCollapsible() {
     setIsCollapsible(!isCollapsible);
   }
 
-  function onSend() {}
+  function onSend() {
+    showMessage({
+      message: 'Your message has been sent successfully! Thanks for feedback.',
+      type: 'success',
+      floating: true,
+    });
+    setIsCollapsible(false);
+    dispatch(feedbackVisible(false));
+  }
   function onClear() {}
 
   return (

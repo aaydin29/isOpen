@@ -1,7 +1,7 @@
 import {StyleSheet, View, StatusBar} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {modalVisible} from '../../context/reducers';
+import {modalVisible, feedbackVisible} from '../../context/reducers';
 
 import colors from '../../styles/colors';
 import HomeHeader from '../../components/cards/Home/HomeHeader';
@@ -10,21 +10,26 @@ import FeedbackModal from '../../components/modals/FeedbackModal';
 import PlacesModal from '../../components/modals/PlacesModal';
 
 const Home = ({navigation}) => {
-  const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
+  // const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
   const [placesModalVisible, setPlacesModalVisible] = useState(false);
   const dispatch = useDispatch();
   const placesVisible = useSelector(state => state.modalVisible);
+  const feedbackModalVisible = useSelector(state => state.feedbackModalVisible);
 
   useEffect(() => {
     setPlacesModalVisible(placesVisible);
   }, [placesVisible]);
 
   function handleMenu() {
-    setFeedbackModalVisible(!feedbackModalVisible);
+    dispatch(feedbackVisible(true));
   }
 
   function handleClosePlace() {
     dispatch(modalVisible(false));
+  }
+
+  function handleFeedbackClose() {
+    dispatch(feedbackVisible(false));
   }
 
   return (
@@ -41,7 +46,10 @@ const Home = ({navigation}) => {
       <View style={styles.header_container}>
         <HomeHeader onPress={handleMenu} />
       </View>
-      <FeedbackModal isVisible={feedbackModalVisible} onClose={handleMenu} />
+      <FeedbackModal
+        isVisible={feedbackModalVisible}
+        onClose={handleFeedbackClose}
+      />
       <PlacesModal isVisible={placesModalVisible} onClose={handleClosePlace} />
     </View>
   );
