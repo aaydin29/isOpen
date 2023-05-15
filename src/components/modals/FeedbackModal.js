@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   text_input: {
     marginHorizontal: 15,
+    color: 'white',
   },
   collapsible: {
     backgroundColor: colors.koyuGri,
