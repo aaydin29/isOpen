@@ -144,12 +144,13 @@ const styles = StyleSheet.create({
     height: 128,
     borderRadius: 10,
     alignSelf: 'center',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   nameAndcircle: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 4,
+    marginTop: 3,
   },
   name: {
     fontSize: 16,
@@ -163,11 +164,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: colors.openGreen,
     marginRight: 3,
+    marginLeft: 5,
   },
   catAndrating: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 3,
   },
   category: {
     flex: 3,
