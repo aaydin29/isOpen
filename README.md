@@ -2,7 +2,8 @@
 
 ### App Video
 
-https://github.com/aaydin29/isOpen/assets/118750784/aecd22fd-da3c-4390-8799-abe4a88dbdc4
+
+https://github.com/aaydin29/isOpen/assets/118750784/dffac97e-d9b2-45d3-8ac8-c77804a12be2
 
 ____________
 ### Description
